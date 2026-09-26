@@ -1,16 +1,32 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
+import ProfilePage from '../support/pageObjects/profilePage'
+import BookSearchPage from '../support/pageObjects/BookSearchPage'
+import BookDetailsPage from '../support/pageObjects/BookDetailsPage'
+
+Cypress.Commands.add('alertStub', () => {
+    cy.window().then((win) => {
+        cy.stub(win, 'alert').as('alert')
+    })
+})
+
+Cypress.Commands.add('expectAlert', (message) => {
+    cy.get('@alert').should('have.been.calledWith', message)
+})
+
+Cypress.Commands.add('addBookIfNotInCollection', (title) => {
+    ProfilePage.visitAndWaitForCollection()
+    ProfilePage.searchBookFromCollection(title)
+    
+    cy.get(ProfilePage.selectors.bookList).then(($list) => {
+        const books = $list.find(ProfilePage.selectors.bookRow)
+
+        if (books.length === 0) {
+            BookSearchPage.searchAndOpenBookDetails(title)
+                cy.alertStub()
+                BookDetailsPage.addBook()
+                cy.expectAlert('Book added to your collection.')
+        }
+    })
+})
 //
 //
 // -- This is a child command --
