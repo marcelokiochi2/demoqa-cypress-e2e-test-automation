@@ -11,7 +11,7 @@ class RegisterPage {
     }
 
     visit(){
-        cy.visit('https://demoqa.com/register')
+        cy.visit('/register')
     }
 
     register(firstName, lastName, username, password){

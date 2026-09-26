@@ -6,7 +6,7 @@ class ProfilePage {
     }
 
     visit(){
-        cy.visit('https://demoqa.com/profile')
+        cy.visit('/profile')
     }
 
 }

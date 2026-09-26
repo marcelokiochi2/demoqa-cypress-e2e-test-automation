@@ -8,7 +8,7 @@ class LoginPage{
     }
 
     visit(){
-        cy.visit('https://demoqa.com/login')
+        cy.visit('/login')
     }
 
     login(username, password){
