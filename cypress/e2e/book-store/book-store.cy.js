@@ -3,6 +3,7 @@ import LoginPage from '../../support/pageObjects/LoginPage'
 import user from '../../fixtures/user.json'
 import ProfilePage from '../../support/pageObjects/profilePage'
 import BookDetailsPage from '../../support/pageObjects/BookDetailsPage'
+import BookStoreAPI from '../../support/APIs/BookStoreAPI'
 
 describe('Book Search', () => {
 
@@ -53,21 +54,27 @@ describe('Book collection', () => {
 
     const bookName = 'Speaking JavaScript'
 
-    beforeEach(() => {
-        BookSearchPage.visitAndWaitForBooks()
-    })
-
     context('when the user is logged in', () => {
+
         beforeEach(() => {
-            cy.session('login', () => {
+            cy.session('login', () => {                
                 LoginPage.visit()
                 LoginPage.login(user.username, user.password)
                 cy.get(ProfilePage.selectors.usernameValue).should('have.text', user.username)
+
             })
         })
 
-        it('should add the book to the collection', () => {            
-            ProfilePage.deleteBookIfExists(bookName)
+        it.only('should add the book to the collection', () => {
+
+            const auth = cy.getAuthCookies()
+
+            cy.log(auth.userId)
+            cy.log(auth.token)
+      
+            BookStoreAPI.removeBookAPI(auth.userId, "9781449365035", auth.token)
+            //BookStoreAPI.removeBookAPI(auth.userId, "9781449365035", auth.token)
+            //ProfilePage.deleteBookIfExists(bookName)
 
             BookSearchPage.searchAndOpenBookDetails(bookName)
             

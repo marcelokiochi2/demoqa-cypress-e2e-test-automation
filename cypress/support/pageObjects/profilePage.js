@@ -41,6 +41,21 @@ class ProfilePage {
             cy.expectAlert('Book deleted.')
     }
 
+    getAuthData(){
+        var userId
+        var token
+
+        cy.intercept('GET', '**/Account/v1/User/*').as('getCollection')
+
+        this.visit()
+
+        cy.wait('@getCollection').then(({ request, response }) => {
+            userId = response.body.userId
+            token = request.headers.authorization.replace('Bearer ', '')    
+        })
+        return {userId, token}
+    }
+
     deleteBookIfExists(title) {
         this.visitAndWaitForCollection()
 

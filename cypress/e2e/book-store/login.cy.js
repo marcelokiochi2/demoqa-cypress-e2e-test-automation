@@ -10,6 +10,7 @@ describe('Login', () => {
     context('with valid credentials', () => {
         it('should login successfully', () => {
             LoginPage.login(user.username, user.password)
+            cy.url().should('include', '/profile')
             cy.get(ProfilePage.selectors.usernameValue).should('have.text', user.username)
             cy.get(ProfilePage.selectors.logoutButton).should('be.visible')
         })

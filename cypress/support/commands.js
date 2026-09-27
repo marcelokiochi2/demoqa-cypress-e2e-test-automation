@@ -27,6 +27,18 @@ Cypress.Commands.add('addBookIfNotInCollection', (title) => {
         }
     })
 })
+
+Cypress.Commands.add('getAuthCookies', () => {
+    return cy.getCookie('token').then((tokenCookie) => {
+        return cy.getCookie('userID').then((userIdCookie) => {
+            return {
+                token: tokenCookie.value,
+                userId: userIdCookie.value
+            }
+        })
+    })
+})
+
 //
 //
 // -- This is a child command --
