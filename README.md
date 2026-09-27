@@ -4,8 +4,6 @@ End-to-end test automation project built with **Cypress** and **JavaScript**.
 
 ## Prerequisites
 
-Make sure the following are installed:
-
 * [Node.js](https://nodejs.org/) 22.23.3
 * npm 10.9.9
 * Git
@@ -56,19 +54,8 @@ Open the Cypress Test Runner:
 npx cypress open
 ```
 
-To open Cypress directly in Chrome:
-
-```bash
-npx cypress open --browser chrome
-```
-
 From the Cypress interface, select the desired spec to run it.
 
-To run **all specs in Chrome with the browser visible**:
-
-```bash
-npx cypress run --browser chrome --headed
-```
 
 ### Headless mode
 
@@ -99,13 +86,8 @@ When running tests through `cypress open`, the Cypress Test Runner displays the 
 
 ### Headless execution
 
-When using `cypress run`, the test results are displayed in the terminal, including:
+When using `cypress run`, the test results are displayed in the terminal.
 
-* Number of tests executed
-* Passed tests
-* Failed tests
-* Skipped tests
-* Execution duration
 
 Cypress screenshots generated for failed tests are stored in:
 
@@ -113,11 +95,27 @@ Cypress screenshots generated for failed tests are stored in:
 cypress/screenshots/
 ```
 
-Video recording is enabled in the Cypress configuration.
 
 Execution videos are stored in:
 
 ```text
 cypress/videos/
+```
 
-These artifacts can be used to investigate failed tests and provide execution evidence.
+## Project Structure
+
+```text
+├── cypress/
+│   ├── e2e/                  # Test specifications organized by functionality
+│   ├── fixtures/             # Static test data
+│   └── support/
+│       ├── apis/             # API request methods used by the tests
+│       ├── pageObjects/      # Page Objects and UI interactions
+│       └── commands.js       # Custom Cypress commands
+│
+├── artifacts/                # Selected execution evidence and test artifacts
+│
+├── DEFECTS.md                # Documented defects identified during testing
+├── RECOMMENDATIONS.md        # Recommendations for CI/CD, scalability, and test strategy
+└── SUMMARY.md                # Test execution summary, decisions, trade-offs, and limitations
+```
