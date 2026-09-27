@@ -150,7 +150,7 @@ describe('Book collection', () => {
             ProfilePage.visitAndWaitForCollection()
             ProfilePage.assertBooksInCollection(booksToAdd)
 
-            cy.alertStub()
+            //cy.alertStub()
             ProfilePage.deleteAllBooksFromCollection()
 
             // Known defect: no success message is displayed after book removal.
