@@ -10,9 +10,7 @@ class BookDetail{
 
     addBook() {
         this.getButton('Add To Your Collection').click()
-    }
-
-    
+    }    
 }
 
 export default new BookDetail()

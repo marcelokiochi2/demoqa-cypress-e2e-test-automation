@@ -32,9 +32,6 @@ class BookSearch {
         this.searchBook(title)
         this.openBookDetails(title)
     }
-
-
-
 }
 
 export default new BookSearch()

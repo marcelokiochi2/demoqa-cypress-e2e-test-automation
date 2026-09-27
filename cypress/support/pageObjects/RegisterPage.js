@@ -21,7 +21,6 @@ class RegisterPage {
         cy.get(this.selectors.passwordInput).type(password)
         cy.get(this.selectors.registerButton).click()
     }
-
 }
 
 export default new RegisterPage()

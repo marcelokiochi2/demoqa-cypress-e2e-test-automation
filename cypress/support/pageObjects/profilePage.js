@@ -34,52 +34,37 @@ class ProfilePage {
         this.getBookFromCollection(title)
             .parents(this.selectors.bookRow)
             .find(this.selectors.deleteButton)
-            .click()            
+            .click()     
 
-            cy.alertStub()
             cy.get(this.selectors.confirmDeleteButton).click()
-            cy.expectAlert('Book deleted.')
-    }
-
-    getAuthData(){
-        var userId
-        var token
-
-        cy.intercept('GET', '**/Account/v1/User/*').as('getCollection')
-
-        this.visit()
-
-        cy.wait('@getCollection').then(({ request, response }) => {
-            userId = response.body.userId
-            token = request.headers.authorization.replace('Bearer ', '')    
-        })
-        return {userId, token}
-    }
-
-    deleteBookIfExists(title) {
-        this.visitAndWaitForCollection()
-
-        this.searchBookFromCollection(title)
-        cy.get(this.selectors.bookList).then(($list) => {
-            const books = $list.find(this.selectors.bookRow)
-
-            if (books.length > 0) {
-                this.deleteBookFromCollection(title)
-            }
-        })
     }
 
     deleteAllBooksFromCollection() {
         cy.get(this.selectors.deleteAllBooksButton).click()
-        //cy.alertStub()
         cy.get(this.selectors.confirmDeleteButton).click()
-        //cy.expectAlert('All Books deleted.')
+    }
+
+    assertBooksInCollection(books) {
+        books.forEach((book) => {
+            this.searchBookFromCollection(book.title)
+            this.getBookFromCollection(book.title)
+                .should('exist')
+            cy.get(this.selectors.searchBox).clear()
+        })
+    }
+
+    assertBooksNotInCollection(books) {
+        books.forEach((book) => {
+            this.searchBookFromCollection(book.title)
+            this.getBookFromCollection(book.title)
+                .should('not.exist')
+            cy.get(this.selectors.searchBox).clear()
+        })
     }
 
     logout(){
         cy.get(this.selectors.logoutButton).click()
     }
-
 }
 
 export default new ProfilePage()
