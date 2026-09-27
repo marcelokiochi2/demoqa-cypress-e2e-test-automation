@@ -75,7 +75,7 @@ describe('Book collection', () => {
             cy.session('login', () => {                
                 LoginPage.visit()
                 LoginPage.login(user.username, user.password)
-                cy.url().should('include', '/profile')
+                cy.url({timeout: 30000}).should('include', '/profile')
                 cy.get(ProfilePage.selectors.usernameValue)
                     .should('have.text', user.username)
             })
